@@ -3,7 +3,7 @@ DockWatts
 
 Simple numeric watt meter to OS X dock.
 
-![Screenshot](screenshot.png)
+![Screenshot](images/screenshot.png)
 
 Installation
 ============
