@@ -43,9 +43,18 @@ class DocNetStatDelegate(NSObject):
         self.statusItem.setHighlightMode_(TRUE)
         self.statusItem.setEnabled_(TRUE)
 
+
         # Menu
         self.error = True
         self.menu = NSMenu.alloc().init()
+
+        # Longterm
+        self.longterm_watts = []
+        self.longterm_status = NSMenuItem.alloc().init()
+        self.longterm_status.setTitle_("init W")
+        self.longterm_status.setToolTip_("5 min usage")
+        self.longterm_status.setKeyEquivalent_('l')
+        self.menu.addItem_(self.longterm_status)
 
         # Sync and Quit buttons
 
@@ -73,7 +82,14 @@ class DocNetStatDelegate(NSObject):
     def sync_(self, notification):
         watts = get_watts()
         if watts is not None:
-            self.statusItem.setTitle_(u"%2.1f W" % watts)
+            self.statusItem.setTitle_(u"%.1f W" % watts)
+            self.longterm_watts.append(watts)
+
+            if len(self.longterm_watts) > 60:
+                 self.longterm_watts = self.longterm_watts[1:]
+
+            longterm = sum(self.longterm_watts) / float(len(self.longterm_watts))
+            self.longterm_status.setTitle_(u"%.1f W" % longterm)
         else:
             self.statusItem.setTitle_(u"E W")
 
