@@ -20,9 +20,9 @@ def get_watts():
 
     for line in stdout.splitlines():
         if line.strip().startswith("Amperage (mA)"):
-            ampers = float(line.split(':', 1)[1].strip())
+            ampers = float(int(line.split(':', 1)[1].strip().replace('\xe2\x88\x92','-')))
         elif line.strip().startswith("Voltage (mV):"):
-            volts = float(line.split(':', 1)[1].strip())
+            volts = float(int(line.split(':', 1)[1].strip().replace('\xe2\x88\x92','-')))
 
     #print("ampers: %s volts: %s" % (ampers, volts))
 
