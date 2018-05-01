@@ -29,7 +29,21 @@ def get_watts():
     return (volts * ampers) / -1000000.0
 
 
+def get_time_remaining():
+    p = Popen(['/usr/bin/pmset', '-g', 'batt'], stdout=PIPE)
+
+    (stdout, stderr) = p.communicate()
+    remaining = "-"
+    for line in stdout.splitlines():
+        if 'InternalBattery' in line:
+            remaining = line.split()[4]
+            break
+    return remaining
+
+
 if __name__ == '__main__':
     watts = get_watts()
+    remaining = get_time_remaining()
     print("%.2f W" % watts)
+    print("%s" % remaining)
 

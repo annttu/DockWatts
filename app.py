@@ -8,7 +8,7 @@ d = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.insert(0, d)
 
-from src.watts import get_watts
+from src.watts import get_watts, get_time_remaining
 
 import logging
 
@@ -81,8 +81,9 @@ class DocNetStatDelegate(NSObject):
 
     def sync_(self, notification):
         watts = get_watts()
+        remaining = get_time_remaining()
         if watts is not None:
-            self.statusItem.setTitle_(u"%.1f W" % watts)
+            self.statusItem.setTitle_(u"%.1f W %s" % (watts, remaining))
             self.longterm_watts.append(watts)
 
             if len(self.longterm_watts) > 60:
