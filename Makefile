@@ -1,9 +1,12 @@
 all: build
 
+# For some reason MacOS System integrity protection (SIP) don't allow building with system python2.7
+PYTHON=/usr/local/Cellar/python/2.7.14/bin/python2.7
+
 build: Applications/DockWatts.app
 
 Applications/DockWatts.app:
-	/usr/bin/python2.7 setup.py py2app -A -s -d ./Applications
+	$(PYTHON) setup.py py2app -d ./Applications
 
 clean:
 	-@rm -r build dist Applications/* 2>/dev/null || true
